@@ -86,9 +86,31 @@
             <span>15 élèves</span>
           </div>
         </div>
-        <div id="container">
+  <div class="contFilter flex justify-between px-3">
+    <div class="border border-green-500 p-2 rounded-2xl text-center">
+        <i class="fa-solid fa-magnifying-glass text-green-800"></i>
 
+        <input
+            class="w-[300px] focus:outline-none" type="text" placeholder="Recherche un élève par prénom ou nom" id="recherche"
+        >
+    </div>
+    <div class="border border-green-500 p-1 rounded-2xl text-center">
+        <i class="fa-solid fa-users text-green-800"></i>
+        <select name="groupes" id="selectGroup">
+            <option value="">Tous les groupes</option>
+            <option value="1">2ème Bac</option>
+            <option value="2">1ère Bac</option>
+            <option value="3">Tronc Commun</option>
+        </select>
+    </div>
+</div>
+          </div>
         </div>
+
+        <div id="container">
+<!-- remplie par function js -->
+        </div>
+
       </section>
       <aside></aside>
     </main>

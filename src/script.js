@@ -120,3 +120,22 @@ export function afficherApprenants(tab) {
     contenair.append(creeLigne(eleve));
   });
 }
+export function filtrerApprenants() {
+  const rechercheValue = document
+    .querySelector("#recherche")
+    .value.toLowerCase();
+  const valueselect = document.querySelector("#selectGroup").value;
+
+  let result = eleves.filter((eleve) => {
+    const nom = eleve.nom.toLowerCase();
+    const prenom = eleve.prenom.toLowerCase();
+
+    const recherche =
+      nom.includes(rechercheValue) || prenom.includes(rechercheValue);
+    const groupe = valueselect === "" || eleve.groupeId === Number(valueselect);
+
+    return recherche && groupe;
+  });
+
+  afficherApprenants(result);
+}
