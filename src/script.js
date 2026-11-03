@@ -116,14 +116,14 @@ export function afficherApprenants(tab) {
   const contenair = document.querySelector("#container");
   contenair.innerHTML = "";
   let arr = tab ?? eleves;
+   document.querySelector("#nombreEtudiants").textContent =
+        `${arr.length} / ${eleves.length} étudiants`;
   arr.forEach((eleve) => {
     contenair.append(creeLigne(eleve));
   });
 }
 export function filtrerApprenants() {
-  const rechercheValue = document
-    .querySelector("#recherche")
-    .value.toLowerCase();
+  const rechercheValue = document.querySelector("#recherche").value.toLowerCase();
   const valueselect = document.querySelector("#selectGroup").value;
 
   let result = eleves.filter((eleve) => {
