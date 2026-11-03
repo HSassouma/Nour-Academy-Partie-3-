@@ -7,4 +7,5 @@ afficherApprenants()
 const inputRecherche=document.querySelector("#recherche")
 const selectGroup= document.querySelector("#selectGroup")
 inputRecherche.addEventListener("input",filtrerApprenants)
-selectGroup.addEventListener("change",filtrerApprenants)
+selectGroup.addEventListener("change",filtrerApprenants) ;
+
