@@ -86,24 +86,53 @@
             <span id="nombreEtudiants">15 élèves</span>
           </div>
         </div>
-  <div class="contFilter flex justify-between px-3">
-    <div class="border border-green-500 p-2 rounded-2xl text-center">
-        <i class="fa-solid fa-magnifying-glass text-green-800"></i>
-
-        <input
-            class="w-[300px] focus:outline-none" type="text" placeholder="Recherche un élève par prénom ou nom" id="recherche"
+        <div
+          class="contFilter mt-5 flex flex-col gap-3 rounded-2xl border border-[#E6F0E9] bg-[#FAF8F2] p-3 md:flex-row md:items-center"
         >
-    </div>
-    <div class="border border-green-500 p-1 rounded-2xl text-center">
-        <i class="fa-solid fa-users text-green-800"></i>
-        <select name="groupes" id="selectGroup">
-            <option value="">Tous les groupes</option>
-            <option value="1">2ème Bac</option>
-            <option value="2">1ère Bac</option>
-            <option value="3">Tronc Commun</option>
-        </select>
-    </div>
-</div>
+          <div
+            class="flex min-w-0 items-center gap-2.5 rounded-xl border border-[#D6E8DC] bg-white px-3.5 transition-colors focus-within:border-[#174A3A] focus-within:ring-2 focus-within:ring-[#E6F0E9] h-12 md:flex-1"
+          >
+            <i class="fa-solid fa-magnifying-glass text-sm text-[#174A3A]"></i>
+            <input
+              class="h-full w-full min-w-0 bg-transparent text-sm text-[#1D2924] placeholder:text-[#8A9890] focus:outline-none"
+              type="text"
+              placeholder="Recherche un élève par prénom ou nom"
+              id="recherche"
+            />
+          </div>
+
+          <div
+            class="flex items-center gap-2 rounded-xl border border-[#D6E8DC] bg-white px-3 transition-colors focus-within:border-[#174A3A] focus-within:ring-2 focus-within:ring-[#E6F0E9] md:w-44 h-12"
+          >
+            <i class="fa-solid fa-arrow-down-wide-short text-sm text-[#174A3A]"></i>
+            <select
+              id="triEtudiants"
+              class="h-full w-full cursor-pointer bg-transparent text-sm text-[#1D2924] focus:outline-none"
+              aria-label="Trier les étudiants"
+            >
+              <option value="">Aucun tri</option>
+              <option value="nom">Nom</option>
+              <option value="moyenne">Moyenne</option>
+            </select>
+          </div>
+
+          <div
+            class="flex items-center gap-2 rounded-xl border border-[#D6E8DC] bg-white px-3 transition-colors focus-within:border-[#174A3A] focus-within:ring-2 focus-within:ring-[#E6F0E9] md:w-52 h-12"
+          >
+            <i class="fa-solid fa-users text-sm text-[#174A3A]"></i>
+            <select
+              name="groupes"
+              id="selectGroup"
+              class="h-full w-full cursor-pointer bg-transparent text-sm text-[#1D2924] focus:outline-none"
+              aria-label="Filtrer par groupe"
+            >
+              <option value="">Tous les groupes</option>
+              <option value="1">2ème Bac</option>
+              <option value="2">1ère Bac</option>
+              <option value="3">Tronc Commun</option>
+            </select>
+          </div>
+        </div>
           </div>
         </div>
 

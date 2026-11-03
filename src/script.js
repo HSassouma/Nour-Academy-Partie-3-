@@ -1,4 +1,19 @@
 import { eleves, groupes } from "./data.js";
+
+function calculerMoyenne(aprenant) {
+  let somme = 0;
+
+  aprenant.notes.forEach((note) => {
+    somme += note;
+  });
+
+  if (aprenant.notes.length === 0) {
+    return null;
+  }
+
+  return somme / aprenant.notes.length;
+}
+
 export function creeLigne(aprenant) {
   const lign = document.createElement("div");
   lign.classList.add(
@@ -16,6 +31,15 @@ export function creeLigne(aprenant) {
     "hover:bg-[#FAF8F2]",
     "m-3",
   );
+
+  if (aprenant.absences >= 3) {
+    lign.classList.remove(
+      "border-[#E6F0E9]",
+      "bg-white",
+      "hover:bg-[#FAF8F2]",
+    );
+    lign.classList.add("border-red-200", "bg-red-50", "hover:bg-red-100");
+  }
 
   const info = document.createElement("div");
   info.classList.add("flex", "items-center", "gap-3", "min-w-0");
@@ -56,18 +80,9 @@ export function creeLigne(aprenant) {
   );
 
   const p = document.createElement("p");
-  let somme = 0;
-  let moyenne = "—";
+  const moyenne = calculerMoyenne(aprenant);
 
-  aprenant.notes.forEach((e) => {
-    somme += e;
-  });
-
-  if (aprenant.notes.length > 0) {
-    moyenne = (somme / aprenant.notes.length).toFixed(1);
-  }
-
-  p.textContent = moyenne === "—" ? "—" : moyenne + "/20";
+  p.textContent = moyenne === null ? "—" : moyenne.toFixed(1) + "/20";
   p.classList.add("text-sm", "font-semibold", "text-[#174A3A]", "sm:text-base");
 
   const absences = document.createElement("p");
@@ -84,7 +99,7 @@ export function creeLigne(aprenant) {
       "rounded-full",
       "border",
       "border-red-200",
-      "bg-red-50",
+      "bg-white",
       "px-2.5",
       "py-0.5",
       "text-xs",
@@ -112,6 +127,31 @@ export function creeLigne(aprenant) {
   return lign;
 }
 
+export function triNom(tab) {
+  return tab.slice().sort((a, b) => a.nom.localeCompare(b.nom, "fr"));
+}
+
+export function triMoyenne(tab) {
+  return tab.slice().sort((a, b) => {
+    const moyenneA = calculerMoyenne(a);
+    const moyenneB = calculerMoyenne(b);
+
+    if (moyenneA === null && moyenneB === null) {
+      return 0;
+    }
+
+    if (moyenneA === null) {
+      return 1;
+    }
+
+    if (moyenneB === null) {
+      return -1;
+    }
+
+    return moyenneB - moyenneA;
+  });
+}
+
 export function afficherApprenants(tab) {
   const contenair = document.querySelector("#container");
   contenair.innerHTML = "";
@@ -137,5 +177,15 @@ export function filtrerApprenants() {
     return recherche && groupe;
   });
 
+  const tri = document.querySelector("#triEtudiants").value;
+
+  if (tri === "nom") {
+    result = triNom(result);
+  } else if (tri === "moyenne") {
+    result = triMoyenne(result);
+  }
+
   afficherApprenants(result);
 }
+
+

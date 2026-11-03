@@ -8,3 +8,6 @@ const selectGroup= document.querySelector("#selectGroup")
 inputRecherche.addEventListener("input",filtrerApprenants)
 selectGroup.addEventListener("change",filtrerApprenants) ;
 
+const selectTri= document.querySelector("#triEtudiants")
+selectTri.addEventListener("change",filtrerApprenants) ;
+
