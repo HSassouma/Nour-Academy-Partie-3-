@@ -121,9 +121,7 @@ export function afficherApprenants(tab) {
   });
 }
 export function filtrerApprenants() {
-  const rechercheValue = document
-    .querySelector("#recherche")
-    .value.toLowerCase();
+  const rechercheValue = document.querySelector("#recherche").value.toLowerCase();
   const valueselect = document.querySelector("#selectGroup").value;
 
   let result = eleves.filter((eleve) => {
