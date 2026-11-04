@@ -33,6 +33,7 @@ export function creeLigne(aprenant) {
     "hover:bg-[#FAF8F2]",
     "m-3",
   );
+  lign.dataset.id = aprenant.id;
 
   if (aprenant.absences >= 3) {
     lign.classList.remove(
@@ -65,18 +66,19 @@ export function creeLigne(aprenant) {
   const btnAbsent = document.createElement("button");
   btnAbsent.textContent = "Absent";
   btnAbsent.dataset.id = aprenant.id;
+  btnAbsent.dataset.action = "absent";
   btnAbsent.classList.add(
-    "rounded-lg",
-    "border",
-    "border-red-200",
-    "bg-red-50",
-    "px-3",
-    "py-2",
-    "text-xs",
-    "font-medium",
-    "text-red-700",
-    "transition-colors",
-    "hover:bg-red-100",
+   "rounded-lg",
+  "border",
+  "border-[#E6F0E9]",
+  "bg-[#FAF8F2]",
+  "px-3",
+  "py-2",
+  "text-xs",
+  "font-medium",
+  "text-[#174A3A]",
+  "transition-colors",
+  "hover:bg-[#E6F0E9]",
   );
 
   const inputNote = document.createElement("input");
@@ -100,6 +102,7 @@ export function creeLigne(aprenant) {
   const btnNote = document.createElement("button");
   btnNote.textContent = "Ajouter";
   btnNote.dataset.id = aprenant.id;
+  btnNote.dataset.action = "note";
   btnNote.classList.add(
     "rounded-lg",
     "bg-[#174A3A]",
@@ -250,5 +253,18 @@ export function filtrerApprenants() {
 
   afficherApprenants(result);
 }
+
+export function marquerAbsent(id){
+  const eleve=eleves.find(a =>{ return  a.id === Number(id)}) 
+  if(eleve){
+    eleve.absences++
+  }
+   const ancienneLigne = document.querySelector(
+      `[data-id="${id}"]`
+    );
+
+    ancienneLigne.replaceWith(creeLigne(eleve))
+}
+
 
 
