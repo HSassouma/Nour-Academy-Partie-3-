@@ -14,10 +14,12 @@ function calculerMoyenne(aprenant) {
   return somme / aprenant.notes.length;
 }
 
+
 export function creeLigne(aprenant) {
   const lign = document.createElement("div");
   lign.classList.add(
     "flex",
+    "flex-wrap",
     "items-center",
     "justify-between",
     "gap-3",
@@ -58,6 +60,64 @@ export function creeLigne(aprenant) {
     "bg-[#E6F0E9]",
     "text-[#174A3A]",
     "text-base",
+  );
+
+  const btnAbsent = document.createElement("button");
+  btnAbsent.textContent = "Absent";
+  btnAbsent.dataset.id = aprenant.id;
+  btnAbsent.classList.add(
+    "rounded-lg",
+    "border",
+    "border-red-200",
+    "bg-red-50",
+    "px-3",
+    "py-2",
+    "text-xs",
+    "font-medium",
+    "text-red-700",
+    "transition-colors",
+    "hover:bg-red-100",
+  );
+
+  const inputNote = document.createElement("input");
+  inputNote.type = "number";
+  inputNote.min = "0";
+  inputNote.max = "20";
+  inputNote.placeholder = "Note";
+  inputNote.classList.add(
+    "w-20",
+    "rounded-lg",
+    "border",
+    "border-[#E6F0E9]",
+    "bg-white",
+    "px-2",
+    "py-2",
+    "text-sm",
+    "outline-none",
+    "focus:border-[#174A3A]",
+  );
+
+  const btnNote = document.createElement("button");
+  btnNote.textContent = "Ajouter";
+  btnNote.dataset.id = aprenant.id;
+  btnNote.classList.add(
+    "rounded-lg",
+    "bg-[#174A3A]",
+    "px-3",
+    "py-2",
+    "text-xs",
+    "font-medium",
+    "text-white",
+    "transition-colors",
+    "hover:bg-[#23634D]",
+  );
+
+  const actions = document.createElement("div");
+  actions.classList.add(
+    "flex",
+    "flex-wrap",
+    "items-center",
+    "gap-2",
   );
 
   const h2 = document.createElement("h2");
@@ -108,6 +168,7 @@ export function creeLigne(aprenant) {
     );
     blocNom.append(message);
   }
+
   absences.textContent = aprenant.absences + " absences";
   absences.classList.add(
     "whitespace-nowrap",
@@ -120,9 +181,11 @@ export function creeLigne(aprenant) {
     "text-[#65716A]",
     "sm:text-sm",
   );
+
   info.append(icon, blocNom);
   details.append(p, absences);
-  lign.append(info, details);
+  actions.append(btnAbsent, inputNote, btnNote);
+  lign.append(info, details, actions);
 
   return lign;
 }
