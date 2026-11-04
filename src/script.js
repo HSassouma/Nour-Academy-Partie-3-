@@ -1,3 +1,4 @@
+
 import { eleves, groupes } from "./data.js";
 
 function calculerMoyenne(aprenant) {
@@ -14,9 +15,9 @@ function calculerMoyenne(aprenant) {
   return somme / aprenant.notes.length;
 }
 
-
 export function creeLigne(aprenant) {
   const lign = document.createElement("div");
+
   lign.classList.add(
     "flex",
     "flex-wrap",
@@ -33,7 +34,8 @@ export function creeLigne(aprenant) {
     "hover:bg-[#FAF8F2]",
     "m-3",
   );
-  lign.dataset.id = aprenant.id;
+
+  lign.dataset.rowId = aprenant.id;
 
   if (aprenant.absences >= 3) {
     lign.classList.remove(
@@ -41,6 +43,7 @@ export function creeLigne(aprenant) {
       "bg-white",
       "hover:bg-[#FAF8F2]",
     );
+
     lign.classList.add("border-red-200", "bg-red-50", "hover:bg-red-100");
   }
 
@@ -67,25 +70,28 @@ export function creeLigne(aprenant) {
   btnAbsent.textContent = "Absent";
   btnAbsent.dataset.id = aprenant.id;
   btnAbsent.dataset.action = "absent";
+
   btnAbsent.classList.add(
-   "rounded-lg",
-  "border",
-  "border-[#E6F0E9]",
-  "bg-[#FAF8F2]",
-  "px-3",
-  "py-2",
-  "text-xs",
-  "font-medium",
-  "text-[#174A3A]",
-  "transition-colors",
-  "hover:bg-[#E6F0E9]",
+    "rounded-lg",
+    "border",
+    "border-[#E6F0E9]",
+    "bg-[#FAF8F2]",
+    "px-3",
+    "py-2",
+    "text-xs",
+    "font-medium",
+    "text-[#174A3A]",
+    "transition-colors",
+    "hover:bg-[#E6F0E9]",
   );
 
   const inputNote = document.createElement("input");
   inputNote.type = "number";
   inputNote.min = "0";
   inputNote.max = "20";
+  inputNote.dataset.id = aprenant.id;
   inputNote.placeholder = "Note";
+
   inputNote.classList.add(
     "w-20",
     "rounded-lg",
@@ -103,6 +109,7 @@ export function creeLigne(aprenant) {
   btnNote.textContent = "Ajouter";
   btnNote.dataset.id = aprenant.id;
   btnNote.dataset.action = "note";
+
   btnNote.classList.add(
     "rounded-lg",
     "bg-[#174A3A]",
@@ -125,6 +132,7 @@ export function creeLigne(aprenant) {
 
   const h2 = document.createElement("h2");
   h2.textContent = aprenant.nom + " " + aprenant.prenom;
+
   h2.classList.add(
     "truncate",
     "text-sm",
@@ -146,7 +154,13 @@ export function creeLigne(aprenant) {
   const moyenne = calculerMoyenne(aprenant);
 
   p.textContent = moyenne === null ? "—" : moyenne.toFixed(1) + "/20";
-  p.classList.add("text-sm", "font-semibold", "text-[#174A3A]", "sm:text-base");
+
+  p.classList.add(
+    "text-sm",
+    "font-semibold",
+    "text-[#174A3A]",
+    "sm:text-base",
+  );
 
   const absences = document.createElement("p");
 
@@ -157,6 +171,7 @@ export function creeLigne(aprenant) {
   if (aprenant.absences >= 3) {
     const message = document.createElement("span");
     message.textContent = "Prévenir les parents";
+
     message.classList.add(
       "w-fit",
       "rounded-full",
@@ -169,10 +184,12 @@ export function creeLigne(aprenant) {
       "font-medium",
       "text-red-700",
     );
+
     blocNom.append(message);
   }
 
   absences.textContent = aprenant.absences + " absences";
+
   absences.classList.add(
     "whitespace-nowrap",
     "rounded-full",
@@ -221,15 +238,22 @@ export function triMoyenne(tab) {
 export function afficherApprenants(tab) {
   const contenair = document.querySelector("#container");
   contenair.innerHTML = "";
+
   let arr = tab ?? eleves;
-   document.querySelector("#nombreEtudiants").textContent =
-        `${arr.length} / ${eleves.length} étudiants`;
+
+  document.querySelector("#nombreEtudiants").textContent =
+    `${arr.length} / ${eleves.length} étudiants`;
+
   arr.forEach((eleve) => {
     contenair.append(creeLigne(eleve));
   });
 }
+
 export function filtrerApprenants() {
-  const rechercheValue = document.querySelector("#recherche").value.toLowerCase();
+  const rechercheValue = document
+    .querySelector("#recherche")
+    .value.toLowerCase();
+
   const valueselect = document.querySelector("#selectGroup").value;
 
   let result = eleves.filter((eleve) => {
@@ -238,7 +262,9 @@ export function filtrerApprenants() {
 
     const recherche =
       nom.includes(rechercheValue) || prenom.includes(rechercheValue);
-    const groupe = valueselect === "" || eleve.groupeId === Number(valueselect);
+
+    const groupe =
+      valueselect === "" || eleve.groupeId === Number(valueselect);
 
     return recherche && groupe;
   });
@@ -254,17 +280,39 @@ export function filtrerApprenants() {
   afficherApprenants(result);
 }
 
-export function marquerAbsent(id){
-  const eleve=eleves.find(a =>{ return  a.id === Number(id)}) 
-  if(eleve){
-    eleve.absences++
-  }
-   const ancienneLigne = document.querySelector(
-      `[data-id="${id}"]`
-    );
+export function marquerAbsent(id) {
+  const eleve = eleves.find((a) => a.id === Number(id));
 
-    ancienneLigne.replaceWith(creeLigne(eleve))
+  if (!eleve) return;
+
+  eleve.absences++;
+
+  const ancienneLigne = document.querySelector(
+    `[data-row-id="${id}"]`
+  );
+
+  if (ancienneLigne) {
+    ancienneLigne.replaceWith(creeLigne(eleve));
+  }
 }
 
+export function ajouterNote(id, value) {
+  const eleve = eleves.find((a) => a.id === Number(id));
 
+  if (!eleve) return;
 
+  const note = Number(value);
+
+  if (
+    value.trim() === "" ||
+    note < 0 ||
+    note > 20
+  ) {
+    alert("Veuillez entrer une note entre 0 et 20.");
+    return;
+  }
+
+  eleve.notes.push(note);
+
+  filtrerApprenants();
+}
