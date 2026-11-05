@@ -15,6 +15,105 @@ function calculerMoyenne(aprenant) {
   return somme / aprenant.notes.length;
 }
 
+export function afficherBilan() {
+  const conteneurMoyennes = document.querySelector("#moyenneGroupe");
+  const conteneurParents = document.querySelector("#parentsAAppeler");
+  const totalAbsences = document.querySelector("#totalAbsences");
+  const nombreAlertes = document.querySelector("#nombreAlertes");
+
+  conteneurMoyennes.textContent = "";
+  conteneurParents.textContent = "";
+
+  const elevesEnAlerte = eleves.filter((eleve) => eleve.absences >= 3);
+
+  nombreAlertes.textContent = elevesEnAlerte.length;
+  totalAbsences.textContent = eleves.reduce(
+    (total, eleve) => total + eleve.absences,
+    0,
+  );
+
+  groupes.forEach((groupe) => {
+    const elevesDuGroupe = eleves.filter(
+      (eleve) => eleve.groupeId === groupe.id,
+    );
+
+    const moyennes = elevesDuGroupe
+      .map((eleve) => calculerMoyenne(eleve))
+      .filter((moyenne) => moyenne !== null);
+
+    let moyenneDuGroupe = "—";
+
+    if (moyennes.length > 0) {
+      const somme = moyennes.reduce((total, moyenne) => total + moyenne, 0);
+      moyenneDuGroupe = (somme / moyennes.length).toFixed(1) + "/20";
+    }
+
+    const ligneMoyenne = document.createElement("div");
+    ligneMoyenne.classList.add(
+      "flex",
+      "items-center",
+      "justify-between",
+      "gap-2",
+    );
+
+    const nomGroupe = document.createElement("span");
+    nomGroupe.textContent = groupe.nom;
+    nomGroupe.classList.add("text-sm", "text-[#65716A]");
+
+    const valeurMoyenne = document.createElement("span");
+    valeurMoyenne.textContent = moyenneDuGroupe;
+    valeurMoyenne.classList.add(
+      "text-sm",
+      "font-semibold",
+      "text-[#174A3A]",
+    );
+
+    ligneMoyenne.append(nomGroupe, valeurMoyenne);
+    conteneurMoyennes.append(ligneMoyenne);
+
+    const blocGroupe = document.createElement("div");
+    blocGroupe.classList.add("flex", "flex-col", "gap-1");
+
+    const titreGroupe = document.createElement("p");
+    titreGroupe.textContent = groupe.nom;
+    titreGroupe.classList.add(
+      "text-sm",
+      "font-semibold",
+      "text-[#174A3A]",
+    );
+
+    blocGroupe.append(titreGroupe);
+
+    const alertesDuGroupe = elevesDuGroupe
+      .filter((eleve) => eleve.absences >= 3)
+      .map((eleve) => ({
+        nomComplet: eleve.prenom + " " + eleve.nom,
+        telephone: eleve.telephoneParent,
+      }));
+
+    const aucunEleveEnAlerte = elevesDuGroupe.every(
+      (eleve) => eleve.absences < 3,
+    );
+
+    if (aucunEleveEnAlerte) {
+      const message = document.createElement("p");
+      message.textContent = "Aucun élève en alerte";
+      message.classList.add("text-sm", "text-[#65716A]");
+      blocGroupe.append(message);
+    } else {
+      alertesDuGroupe.forEach((alerte) => {
+        const information = document.createElement("p");
+        information.textContent =
+          alerte.nomComplet + " — " + alerte.telephone;
+        information.classList.add("text-sm", "text-[#65716A]");
+        blocGroupe.append(information);
+      });
+    }
+
+    conteneurParents.append(blocGroupe);
+  });
+}
+
 export function creeLigne(aprenant) {
   const lign = document.createElement("div");
 
@@ -294,6 +393,8 @@ export function marquerAbsent(id) {
   if (ancienneLigne) {
     ancienneLigne.replaceWith(creeLigne(eleve));
   }
+
+  afficherBilan();
 }
 
 export function ajouterNote(id, value) {
@@ -315,6 +416,7 @@ export function ajouterNote(id, value) {
   eleve.notes.push(note);
 
   filtrerApprenants();
+  afficherBilan();
 }
 
 const formulaireContainer=document.querySelector("#formulaireContainer")
@@ -429,6 +531,7 @@ if (nombreEleves >= 15) {
 }
 eleves.push(nouveauEleve)
 filtrerApprenants()
+afficherBilan()
 document.querySelector("#formAjouterEleve").reset()
 setTimeout(() => {
   fermerFormulaire();
