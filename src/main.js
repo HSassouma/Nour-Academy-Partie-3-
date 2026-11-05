@@ -1,7 +1,7 @@
 import './style.css'
 import '@fortawesome/fontawesome-free/css/fontawesome.css'
 import '@fortawesome/fontawesome-free/css/solid.css'
-import { afficherApprenants,ajouterNote,filtrerApprenants, marquerAbsent  } from './script.js'
+import { afficherApprenants,afficherFormulaire,ajouterNote,fermerFormulaire,filtrerApprenants, marquerAbsent  } from './script.js'
 afficherApprenants()
 const inputRecherche=document.querySelector("#recherche")
 const selectGroup= document.querySelector("#selectGroup")
@@ -26,5 +26,10 @@ container.addEventListener("click",(event)=>{
         ajouterNote(id,input.value)
     }
 })
+
+const ajouterEleve = document.querySelector("#btnAjouterEleve")
+const btnFermerForm = document.querySelector("#btnFermerForm")
+ajouterEleve.addEventListener("click", afficherFormulaire)
+btnFermerForm.addEventListener("click", fermerFormulaire)
 
 

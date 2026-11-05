@@ -316,3 +316,11 @@ export function ajouterNote(id, value) {
 
   filtrerApprenants();
 }
+
+const formulaireContainer=document.querySelector("#formulaireContainer")
+export function afficherFormulaire() {
+  formulaireContainer.classList.remove("hidden");
+}
+export function fermerFormulaire() {
+  formulaireContainer.classList.add("hidden");
+}
