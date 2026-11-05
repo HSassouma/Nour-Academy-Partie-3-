@@ -1,8 +1,9 @@
 import './style.css'
 import '@fortawesome/fontawesome-free/css/fontawesome.css'
 import '@fortawesome/fontawesome-free/css/solid.css'
-import { afficherApprenants,afficherFormulaire,ajouterEleve,ajouterNote,fermerFormulaire,filtrerApprenants, marquerAbsent  } from './script.js'
+import { afficherApprenants,afficherBilan,afficherFormulaire,ajouterEleve,ajouterNote,fermerFormulaire,filtrerApprenants, marquerAbsent  } from './script.js'
 afficherApprenants()
+afficherBilan()
 const inputRecherche=document.querySelector("#recherche")
 const selectGroup= document.querySelector("#selectGroup")
 inputRecherche.addEventListener("input",filtrerApprenants)
