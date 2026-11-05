@@ -1,7 +1,7 @@
 import './style.css'
 import '@fortawesome/fontawesome-free/css/fontawesome.css'
 import '@fortawesome/fontawesome-free/css/solid.css'
-import { afficherApprenants,afficherFormulaire,ajouterNote,fermerFormulaire,filtrerApprenants, marquerAbsent  } from './script.js'
+import { afficherApprenants,afficherFormulaire,ajouterEleve,ajouterNote,fermerFormulaire,filtrerApprenants, marquerAbsent  } from './script.js'
 afficherApprenants()
 const inputRecherche=document.querySelector("#recherche")
 const selectGroup= document.querySelector("#selectGroup")
@@ -27,9 +27,14 @@ container.addEventListener("click",(event)=>{
     }
 })
 
-const ajouterEleve = document.querySelector("#btnAjouterEleve")
+const btnOuvrirForm = document.querySelector("#btnAjouterEleve")
 const btnFermerForm = document.querySelector("#btnFermerForm")
-ajouterEleve.addEventListener("click", afficherFormulaire)
+const formAjouterEleve = document.querySelector("#formAjouterEleve")
+btnOuvrirForm.addEventListener("click", afficherFormulaire)
 btnFermerForm.addEventListener("click", fermerFormulaire)
+formAjouterEleve.addEventListener("submit", (event) => {
+    event.preventDefault()
+    ajouterEleve()
+})
 
 

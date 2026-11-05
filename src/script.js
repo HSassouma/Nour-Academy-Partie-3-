@@ -324,3 +324,113 @@ export function afficherFormulaire() {
 export function fermerFormulaire() {
   formulaireContainer.classList.add("hidden");
 }
+
+export function ajouterEleve(){
+  const regexNom = /^[A-Za-zÀ-ÿ\s-]{2,}$/
+  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const regexTelephone = /^(06|07)\d{8}$|^\+212[67]\d{8}$/
+  const prenom = document.querySelector("#prenom")
+const nom = document.querySelector("#nom")
+const groupe = document.querySelector("#groupe")
+const emailParent = document.querySelector("#emailParent")
+const telephoneParent = document.querySelector("#telephoneParent")
+const erreurPrenom = document.querySelector("#erreurPrenom")
+const erreurNom = document.querySelector("#erreurNom")
+const erreurEmail = document.querySelector("#erreurEmail")
+const erreurTelephone = document.querySelector("#erreurTelephone")
+const prenomValide = regexNom.test(prenom.value.trim())
+const nomValide = regexNom.test(nom.value.trim())
+const emailValide = regexEmail.test(emailParent.value.trim())
+const telephoneValide = regexTelephone.test(telephoneParent.value.trim())
+if (prenomValide) {
+    erreurPrenom.textContent = "Prénom valide"
+    erreurPrenom.classList.add("text-green-600")
+    erreurPrenom.classList.remove("text-red-600")
+    prenom.classList.add("border-green-500")
+    prenom.classList.remove("border-red-500")
+} else {
+    erreurPrenom.textContent = "Prénom invalide (2 lettres minimum)"
+    erreurPrenom.classList.add("text-red-600")
+    erreurPrenom.classList.remove("text-green-600")
+    prenom.classList.add("border-red-500")
+    prenom.classList.remove("border-green-500")
+}
+if (nomValide) {
+    erreurNom.textContent = "Nom valide"
+    erreurNom.classList.add("text-green-600")
+    erreurNom.classList.remove("text-red-600")
+    nom.classList.add("border-green-500")
+    nom.classList.remove("border-red-500")
+} else {
+    erreurNom.textContent = "Nom invalide (2 lettres minimum)"
+    erreurNom.classList.add("text-red-600")
+    erreurNom.classList.remove("text-green-600")
+    nom.classList.add("border-red-500")
+    nom.classList.remove("border-green-500")
+}
+if (emailValide) {
+    erreurEmail.textContent = "Email valide"
+    erreurEmail.classList.add("text-green-600")
+    erreurEmail.classList.remove("text-red-600")
+    emailParent.classList.add("border-green-500")
+    emailParent.classList.remove("border-red-500")
+} else {
+    erreurEmail.textContent = "Email invalide"
+    erreurEmail.classList.add("text-red-600")
+    erreurEmail.classList.remove("text-green-600")
+    emailParent.classList.add("border-red-500")
+    emailParent.classList.remove("border-green-500")
+}
+if (telephoneValide) {
+    erreurTelephone.textContent = "Téléphone valide"
+    erreurTelephone.classList.add("text-green-600")
+    erreurTelephone.classList.remove("text-red-600")
+    telephoneParent.classList.add("border-green-500")
+    telephoneParent.classList.remove("border-red-500")
+} else {
+    erreurTelephone.textContent = "Format invalide (06/07 ou +212)"
+    erreurTelephone.classList.add("text-red-600")
+    erreurTelephone.classList.remove("text-green-600")
+    telephoneParent.classList.add("border-red-500")
+    telephoneParent.classList.remove("border-green-500")
+}
+const validations = [ prenomValide, nomValide,emailValide,telephoneValide,]
+
+const formulaireValide = validations.every(validation => validation === true)
+if (!formulaireValide) {
+    return
+}
+  const nouveauEleve = {
+    id: eleves.length+1,
+    prenom: prenom.value.trim(),
+    nom: nom.value.trim(),
+    groupeId: Number(groupe.value),
+    emailParent: emailParent.value.trim(),
+    telephoneParent: telephoneParent.value.trim(),
+    absences: 0,
+    notes: []
+}
+const eleveExiste = eleves.some(eleve =>
+    eleve.prenom.toLowerCase() === nouveauEleve.prenom.toLowerCase() &&
+    eleve.nom.toLowerCase() === nouveauEleve.nom.toLowerCase() &&
+    eleve.groupeId === nouveauEleve.groupeId
+)
+if (eleveExiste) {
+    alert("Cet élève existe déjà dans ce groupe")
+    return
+}
+const nombreEleves = eleves.filter(eleve =>
+    eleve.groupeId === nouveauEleve.groupeId
+).length
+
+if (nombreEleves >= 15) {
+    alert("Ce groupe est complet (15 élèves maximum)")
+    return
+}
+eleves.push(nouveauEleve)
+filtrerApprenants()
+document.querySelector("#formAjouterEleve").reset()
+setTimeout(() => {
+  fermerFormulaire();
+}, 1000);
+}
