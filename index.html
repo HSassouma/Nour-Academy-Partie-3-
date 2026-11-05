@@ -147,6 +147,118 @@
   </button>
 </div>
 
+<!-- formulair -->
+<div
+  id="formulaireContainer"
+  class="fixed hidden inset-0 z-50  items-center justify-center bg-black/40 p-4"
+>
+  <div class="absolute left-1/2 top-1/2 w-[90%] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-6 shadow-xl">
+
+    <div class="mb-6 flex items-center justify-between">
+      <div>
+        <h2 class="text-xl font-bold text-[#174A3A]">
+          Ajouter un élève
+        </h2>
+        <p class="mt-1 text-sm text-[#65716A]">
+          Remplissez les informations du nouvel élève
+        </p>
+      </div>
+
+      <button
+        type="button"
+        id="btnFermerForm"
+        class="flex h-10 w-10 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100"
+      >
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+
+    <form id="formAjouterEleve" class="flex flex-col gap-4">
+
+      <div>
+        <label for="prenom" class="mb-1 block text-sm font-semibold text-[#1D2924]">
+          Prénom
+        </label>
+        <input
+          type="text"
+          id="prenom"
+          placeholder="Prénom de l'élève"
+          class="w-full rounded-xl border border-[#D6E8DC] px-4 py-3 outline-none focus:border-[#174A3A] focus:ring-2 focus:ring-[#E6F0E9]"
+        />
+        <p id="erreurPrenom" class="mt-1 text-xs"></p>
+      </div>
+
+      <div>
+        <label for="nom" class="mb-1 block text-sm font-semibold text-[#1D2924]">
+          Nom
+        </label>
+        <input
+          type="text"
+          id="nom"
+          placeholder="Nom de l'élève"
+          class="w-full rounded-xl border border-[#D6E8DC] px-4 py-3 outline-none focus:border-[#174A3A] focus:ring-2 focus:ring-[#E6F0E9]"
+        />
+        <p id="erreurNom" class="mt-1 text-xs"></p>
+      </div>
+
+      <div>
+        <label for="groupe" class="mb-1 block text-sm font-semibold text-[#1D2924]">
+          Groupe
+        </label>
+        <select
+          id="groupe"
+          class="w-full rounded-xl border border-[#D6E8DC] bg-white px-4 py-3 outline-none focus:border-[#174A3A] focus:ring-2 focus:ring-[#E6F0E9]"
+        >
+          <option value="">Choisir un groupe</option>
+          <option value="1">2ème Bac</option>
+          <option value="2">1ère Bac</option>
+          <option value="3">Tronc Commun</option>
+        </select>
+        <p id="erreurGroupe" class="mt-1 text-xs"></p>
+      </div>
+
+      <div>
+        <label for="emailParent" class="mb-1 block text-sm font-semibold text-[#1D2924]">
+          Email du parent
+        </label>
+        <input
+          type="email"
+          id="emailParent"
+          placeholder="exemple@email.com"
+          class="w-full rounded-xl border border-[#D6E8DC] px-4 py-3 outline-none focus:border-[#174A3A] focus:ring-2 focus:ring-[#E6F0E9]"
+        />
+        <p id="erreurEmail" class="mt-1 text-xs"></p>
+      </div>
+
+      <div>
+        <label for="telephoneParent" class="mb-1 block text-sm font-semibold text-[#1D2924]">
+          Téléphone du parent
+        </label>
+        <input
+          type="tel"
+          id="telephoneParent"
+          placeholder="06XXXXXXXX"
+          class="w-full rounded-xl border border-[#D6E8DC] px-4 py-3 outline-none focus:border-[#174A3A] focus:ring-2 focus:ring-[#E6F0E9]"
+        />
+        <p id="erreurTelephone" class="mt-1 text-xs"></p>
+      </div>
+
+      <div>
+       
+      </div>
+
+      <button
+        type="submit"
+        class="mt-2 min-h-12 w-full rounded-xl bg-[#174A3A] px-5 py-3 font-semibold text-white transition-colors hover:bg-[#23634D]"
+      >
+        Ajouter l'élève
+      </button>
+
+    </form>
+  </div>
+</div>
+
+
 
         <div id="container">
 <!-- remplie par function js -->
